@@ -1,4 +1,4 @@
-package com.dreamnote.launch.splash;
+package com.dreamnote.ui.launch.splash;
 
 import android.text.TextUtils;
 
@@ -8,8 +8,6 @@ import com.dreamnote.bean.UserInfoBean;
 import com.dreamnote.common.ApiService;
 import com.dreamnote.common.Constants;
 import com.google.gson.Gson;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.security.GeneralSecurityException;
 
@@ -74,9 +72,10 @@ public class SplashPresenter extends BasePresenter<SplashContract.View> implemen
             public void onResponse(Call<CheckUpdateBean> call, Response<CheckUpdateBean> response) {
                 if (response.isSuccessful()) {
                     CheckUpdateBean mCheckUpdateBean = response.body();
+                    //检测是否更新
                     if (mCheckUpdateBean.getStatus() == 0) {
 
-                        EventBus.getDefault().postSticky(mCheckUpdateBean.getUpdateInfo());
+//                        EventBus.getDefault().postSticky(mCheckUpdateBean.getUpdateInfo());
                     }
                 }
                 checkLogin();

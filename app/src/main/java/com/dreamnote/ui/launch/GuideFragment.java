@@ -1,6 +1,7 @@
-package com.dreamnote.launch;
+package com.dreamnote.ui.launch;
 
 import android.animation.ArgbEvaluator;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,7 +38,8 @@ public class GuideFragment extends BaseFragment {
     Button bt;
     @BindView(R.id.fl_container_guide_fragment)
     FrameLayout fl;
-    private int[] arrayResouces = {R.drawable.bg_welcome_0, R.drawable.bg_welcome_1, R.drawable.bg_welcome_2};
+//    private int[] arrayResouces = {R.drawable.bg_welcome_0, R.drawable.bg_welcome_1, R.drawable.bg_welcome_2};
+    private int[] arrayResouces = {Color.RED, Color.GREEN,Color.BLUE};
     private ArgbEvaluator mArgbEvaluator = new ArgbEvaluator();
 
     public static GuideFragment newInstance() {
@@ -139,7 +141,8 @@ public class GuideFragment extends BaseFragment {
 
             View view = View.inflate(_mActivity, R.layout.item_vp_guide_fragment, null);
             FrameLayout fl_container = (FrameLayout) view.findViewById(R.id.fl_container_item_vp_guide_fragment);
-            fl_container.setBackgroundResource(arrayResouces[position]);
+//            fl_container.setBackgroundResource(arrayResouces[position]);
+            fl_container.setBackgroundColor(arrayResouces[position]);
             container.addView(view);
             return view;
         }

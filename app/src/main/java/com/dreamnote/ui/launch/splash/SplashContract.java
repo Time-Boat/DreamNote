@@ -1,4 +1,4 @@
-package com.dreamnote.launch.splash;
+package com.dreamnote.ui.launch.splash;
 
 
 import cn.itsite.abase.mvp.contract.base.BaseContract;

@@ -1,4 +1,4 @@
-package com.dreamnote.launch;
+package com.dreamnote.ui.launch;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.dreamnote.R;
 import com.dreamnote.common.Constants;
-import com.dreamnote.launch.splash.SplashFragment;
+import com.dreamnote.ui.launch.splash.SplashFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

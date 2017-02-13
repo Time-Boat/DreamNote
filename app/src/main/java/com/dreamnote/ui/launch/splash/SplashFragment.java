@@ -1,7 +1,6 @@
-package com.dreamnote.launch.splash;
+package com.dreamnote.ui.launch.splash;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dreamnote.BaseApplication;
-import com.dreamnote.MainActivity;
+import com.dreamnote.ui.main.MainActivity;
 import com.dreamnote.R;
 import com.dreamnote.common.Constants;
-import com.dreamnote.launch.GuideFragment;
-import com.dreamnote.launch.LoginFragment;
 
 import butterknife.ButterKnife;
 import cn.itsite.abase.cache.SPCache;
@@ -58,7 +55,10 @@ public class SplashFragment extends BaseFragment<SplashContract.Presenter> imple
     private void initData() {
         isFirstentry = (boolean) SPCache.get(BaseApplication.mContext, Constants.ISFIRSTENTRY, true);
         //严格按照流程来，Presenter层的代码应该在View层代码的必要数据加载完成之后才调用
-        mPresenter.start();
+//        mPresenter.start();
+
+        //test
+        go2LoginOrGuide();
     }
 
     @Override
@@ -68,12 +68,11 @@ public class SplashFragment extends BaseFragment<SplashContract.Presenter> imple
             return;
         }
         if (isFirstentry) {
-            start(GuideFragment.newInstance());
-//            _mActivity.startActivity(new Intent(_mActivity, MainActivity.class));
-
+//            start(GuideFragment.newInstance());
+            _mActivity.startActivity(new Intent(_mActivity, MainActivity.class));
         } else {
-            start(LoginFragment.newInstance(Constants.FROM_SPLASH));
-//            _mActivity.startActivity(new Intent(_mActivity, MainActivity.class));
+//            start(LoginFragment.newInstance(Constants.FROM_SPLASH));
+            _mActivity.startActivity(new Intent(_mActivity, MainActivity.class));
         }
     }
 

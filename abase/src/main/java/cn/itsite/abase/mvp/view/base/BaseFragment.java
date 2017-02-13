@@ -30,7 +30,6 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
     @NonNull
     protected abstract P createPresenter();
 
-
     public P getPresenter() {
         return mPresenter;
     }
@@ -56,11 +55,18 @@ public abstract class BaseFragment<P extends BaseContract.Presenter> extends Swi
         }
     }
 
+    //设置toolbar的padding值为状态栏的高度
     public void initStateBar(View view) {
         if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
-            view.setPadding(view.getPaddingLeft(),
-                    view.getPaddingTop() + ScreenUtils.getStatusBarHeight(getActivity()),
-                    view.getPaddingRight(), view.getPaddingBottom());
+//            view.setPadding(view.getPaddingLeft(),
+//                    view.getPaddingTop() + ScreenUtils.getStatusBarHeight(getActivity()),
+//                    view.getPaddingRight(), view.getPaddingBottom());
+            View v = ((View)view.getParent());
+            v.setPadding(v.getPaddingLeft(),
+                    v.getPaddingTop() + ScreenUtils.getStatusBarHeight(getActivity()),
+                    v.getPaddingRight(), v.getPaddingBottom());
         }
+
     }
+
 }
