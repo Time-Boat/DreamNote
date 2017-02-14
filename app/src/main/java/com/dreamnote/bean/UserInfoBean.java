@@ -1,51 +1,15 @@
 package com.dreamnote.bean;
 
 
-/**
- * 用户实体类
- * Created by leguang on 2016/5/11 0031.
- */
 public class UserInfoBean {
 
-    /**
-     * userPhoneNum : 13888888888
-     * status : 0
-     * description : 登录成功
-     * userId : 4028ca815848a903015849383a1d002b
-     * dept : {"orgId":"402880e447e99cf10147e9a03b320003","orgName":"昌吉赣客专"}
-     * userFullName : test
-     */
-
-    private String userPhoneNum;
-    private int status;
-    private String description;
+    private String name;
+    private String email;
+    private String synopsis;
+    private String like;
+    private String registerTime;
+    private String gender;
     private String userId;
-
-    private String userFullName;
-
-    public String getUserPhoneNum() {
-        return userPhoneNum;
-    }
-
-    public void setUserPhoneNum(String userPhoneNum) {
-        this.userPhoneNum = userPhoneNum;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getUserId() {
         return userId;
@@ -55,12 +19,51 @@ public class UserInfoBean {
         this.userId = userId;
     }
 
-    public String getUserFullName() {
-        return userFullName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserFullName(String userFullName) {
-        this.userFullName = userFullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
+
+    public String getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }
