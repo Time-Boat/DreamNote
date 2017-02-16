@@ -3,6 +3,7 @@ package com.dreamnote.ui.main.personal;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,16 +19,18 @@ import com.dreamnote.R;
 import com.dreamnote.adapter.PersonalInfoAdapter;
 import com.dreamnote.bean.DreamInfo;
 import com.dreamnote.common.Constants;
+import com.dreamnote.util.DesignViewUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 
-public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Presenter> implements PersonalInfoContract.View {
+public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Presenter> implements PersonalInfoContract.View,AppBarLayout.OnOffsetChangedListener {
 
     private static final String TAG = PersonalInfoFragment.class.getSimpleName();
     @BindView(R.id.toolbar_toolbar)
@@ -38,6 +41,9 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     RecyclerView mRecyclerView;
     @BindView(R.id.ptrframelayout)
     PtrFrameLayout mPtrframelayout;
+
+    @BindView(R.id.appbar_toolbar)
+    AppBarLayout mAppBarLayout;
 
     //判断是否是加载状态
     private boolean isLoading;
@@ -76,8 +82,26 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mTitle.setText("我");
+
+        resolveSlidingConflict();
+
         initData();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void resolveSlidingConflict() {
+        if (mAppBarLayout != null)
+            mAppBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    //能监听appBar折叠的上下偏移量
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        if (mRecyclerView == null) return;
+        //当appBar的折叠效果完全展开的时候才允许下拉刷新
+        mPtrframelayout.setEnabled(i >= 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
+
+//        ALog.e("-------->off:" + i + "  ScrollRange:" + appBarLayout.getTotalScrollRange() + "  height:" + appBarLayout.getHeight());
     }
 
     //沉降的initData方法是在懒加载中实现的，后期在做修改
@@ -108,6 +132,8 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
         mRecyclerView.setAdapter(mPersonalInfoAdapter);
 //        initPageStateLayout(pagestatelayout);
         initPtrFrameLayout(mPtrframelayout);
+
+
     }
 
     private void setAdapter() {

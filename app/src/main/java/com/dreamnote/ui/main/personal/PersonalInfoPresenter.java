@@ -30,6 +30,8 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
         d.setContent("跟着在旅途中遇到的姐姐，走进一家日式房间。里面有一张圆桌，摆了一锅粥。我们每个人分到一碗。喝着喝着，开始了欢送会。原来就是这个姐姐的澳洲毕业欢送会。");
         d.setReleaseTime("2017-1-1");
         mDreamInfo.add(d);
+        mDreamInfo.add(d);
+        mDreamInfo.add(d);
         getView().refresh(mDreamInfo,pagination);
     }
 
