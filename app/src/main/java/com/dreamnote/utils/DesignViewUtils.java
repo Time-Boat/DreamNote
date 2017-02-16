@@ -1,11 +1,11 @@
-package com.dreamnote.util;
+package com.dreamnote.utils;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.RecyclerView;
 
 /**
  * @author: Administrator
- * @time 2017-02-16 13:53
+ * @time 2017-02-16 14:36
  * @email 770164810@qq.com
  */
 
@@ -52,5 +52,5 @@ public class DesignViewUtils {
      */
     public static boolean isSlideToTop(RecyclerView recyclerView) {
         return recyclerView.computeVerticalScrollOffset() <= 0;
-    }
+        }
 }

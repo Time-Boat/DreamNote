@@ -15,6 +15,7 @@
          app:expandedTitleMarginStart="10dp"
          app:contentScrim="?attr/colorPrimary"
          app:layout_scrollFlags="scroll|exitUntilCollapsed"
+         app:expandedTitleTextAppearance="@style/Toolbar.TitleText"
         >
 
         <ImageView
@@ -30,8 +31,9 @@
             android:id="@+id/toolbar_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/transparent"
+            android:gravity="center"
             app:title=""
+            app:titleTextColor="@color/material_blueGrey_200"
             app:layout_collapseMode="pin"
             >
 
@@ -43,16 +45,7 @@
                 android:src="@drawable/personal"
                 app:border_color="@color/white"
                 app:border_width="1dp"
-                />
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="我"
-                android:textColor="@color/white"
-                android:textSize="18sp"
+                android:layout_marginLeft="16dp"
                 />
 
             <ImageView

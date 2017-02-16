@@ -17,7 +17,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:padding="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -25,7 +27,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/personal"
-                app:border_color="@color/white"
+                app:border_color="@color/lightest_gray"
                 app:border_width="1dp"
                 />
 
@@ -42,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:layout_gravity="center|right"
-                android:paddingRight="10dp"
                 android:text="时间" />
 
         </LinearLayout>

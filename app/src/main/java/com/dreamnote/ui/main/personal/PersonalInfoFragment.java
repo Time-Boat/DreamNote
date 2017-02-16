@@ -19,13 +19,12 @@ import com.dreamnote.R;
 import com.dreamnote.adapter.PersonalInfoAdapter;
 import com.dreamnote.bean.DreamInfo;
 import com.dreamnote.common.Constants;
-import com.dreamnote.util.DesignViewUtils;
+import com.dreamnote.utils.DesignViewUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -35,8 +34,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     private static final String TAG = PersonalInfoFragment.class.getSimpleName();
     @BindView(R.id.toolbar_toolbar)
     Toolbar toolbar;
-    @BindView(R.id.toolbar_title)
-    TextView mTitle;
     @BindView(R.id.recycler_personal)
     RecyclerView mRecyclerView;
     @BindView(R.id.ptrframelayout)
@@ -81,8 +78,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mTitle.setText("我");
-
         resolveSlidingConflict();
 
         initData();
@@ -132,7 +127,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
         mRecyclerView.setAdapter(mPersonalInfoAdapter);
 //        initPageStateLayout(pagestatelayout);
         initPtrFrameLayout(mPtrframelayout);
-
 
     }
 
@@ -191,13 +185,15 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
             //靠这个参数控制最后不需要请求数据
             isLoading = false;
         } else {
-            if (pagination == 0) {
-                Toast.makeText(_mActivity,"当前页无数据",Toast.LENGTH_SHORT).show();
-            } else {
-                //此处一定要先清除之前加载的FooterView，否则会报错。
-                mPersonalInfoAdapter.removeAllFooterView();
-                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
-            }
+            mPersonalInfoAdapter.removeAllFooterView();
+            mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+//            if (pagination == 0) {
+//                Toast.makeText(_mActivity,"当前页无数据",Toast.LENGTH_SHORT).show();
+//            } else {
+//                //此处一定要先清除之前加载的FooterView，否则会报错。
+//                mPersonalInfoAdapter.removeAllFooterView();
+//                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+//            }
         }
     }
 

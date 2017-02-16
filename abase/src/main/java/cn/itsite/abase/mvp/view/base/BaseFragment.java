@@ -18,6 +18,8 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
+import static android.graphics.Color.RED;
+
 
 public abstract class BaseFragment<P extends BaseContract.Presenter> extends SwipeBackFragment {
     private final String TAG = this.getClass().getSimpleName();
