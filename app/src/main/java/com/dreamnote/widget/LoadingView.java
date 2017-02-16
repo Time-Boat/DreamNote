@@ -6,7 +6,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.dreamnote.R;
+
 public class LoadingView extends ImageView {
+
     private LoadingDrawable mLoadingDrawable;
 
     public LoadingView(Context context) {

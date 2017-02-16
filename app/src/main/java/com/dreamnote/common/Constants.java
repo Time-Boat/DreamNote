@@ -39,4 +39,8 @@ public class Constants {
 
     //盐值？
     public static final String ENCRYPT_KEY = "leguang";
+
+    //分页查询
+    public static final int PAGE_SIZE = 30;
+
 }

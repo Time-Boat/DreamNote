@@ -17,13 +17,14 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dreamnote.R;
 import com.dreamnote.adapter.PersonalInfoAdapter;
 import com.dreamnote.bean.DreamInfo;
+import com.dreamnote.common.Constants;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.mvp.view.base.BaseFragment;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 
 public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Presenter> implements PersonalInfoContract.View {
@@ -35,6 +36,15 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     TextView mTitle;
     @BindView(R.id.recycler_personal)
     RecyclerView mRecyclerView;
+    @BindView(R.id.ptrframelayout)
+    PtrFrameLayout mPtrframelayout;
+
+    //判断是否是加载状态
+    private boolean isLoading;
+
+    //判断当前页显示的最后一条数据是第几条
+    private int lastVisibleItemPosition;
+
     private View mFooterLoading, mFooterNotLoading, mFooterError;
 
     LinearLayoutManager mLinearLayoutManager;
@@ -87,7 +97,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
             }
         });
         setAdapter();
-
+        setLoadMore();
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -97,7 +107,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
 
         mRecyclerView.setAdapter(mPersonalInfoAdapter);
 //        initPageStateLayout(pagestatelayout);
-//        initPtrFrameLayout(ptrframelayout);
+        initPtrFrameLayout(mPtrframelayout);
     }
 
     private void setAdapter() {
@@ -105,9 +115,64 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
         mPersonalInfoAdapter.removeAllFooterView();
     }
 
+    private void setLoadMore() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (mPersonalInfoAdapter == null) {
+                    return;
+                }
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItemPosition + 1 == mPersonalInfoAdapter.getItemCount()
+                        //目的是判断第一页数据条数是否满足一整页。
+                        && mPersonalInfoAdapter.getItemCount() >= Constants.PAGE_SIZE) {
+                    if (!isLoading) {
+                        isLoading = true;
+                        pagination += 1;
+                        mPresenter.queryData(pagination);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mLinearLayoutManager == null) {
+                    return;
+                }
+                lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+            }
+        });
+    }
+
     @Override
     public void refresh(List<DreamInfo> mDreamInfo, int pagination) {
-
+        if (mDreamInfo.size() > 0) {
+            if (pagination == 0) {
+                //说明是第一页，或者是刷新,把页码重置为0，代表第一页。
+                if (mDreamInfo.size() >= Constants.PAGE_SIZE) {
+                    mPersonalInfoAdapter.removeAllFooterView();
+                    mPersonalInfoAdapter.addFooterView(mFooterLoading);
+                }
+                this.pagination = 0;
+                mPersonalInfoAdapter.setNewData(mDreamInfo);
+                //设置一下会重新刷新整个item的位置，即使不是第一个item位置刷新，也会重新刷新定位到第一个。
+                mRecyclerView.setAdapter(mPersonalInfoAdapter);
+            } else {
+                mPersonalInfoAdapter.addData(mDreamInfo);
+            }
+            //靠这个参数控制最后不需要请求数据
+            isLoading = false;
+        } else {
+            if (pagination == 0) {
+                Toast.makeText(_mActivity,"当前页无数据",Toast.LENGTH_SHORT).show();
+            } else {
+                //此处一定要先清除之前加载的FooterView，否则会报错。
+                mPersonalInfoAdapter.removeAllFooterView();
+                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+            }
+        }
     }
 
     @Override

@@ -28,4 +28,7 @@ public class Constants {
 
     public static final int FROM_SPLASH = 0;
     public static final int FROM_MAIN = 1;
+
+    public static final String DOMAIN_1 = "drean";
+    public static final String DOMAIN_2 = "d-dream";
 }

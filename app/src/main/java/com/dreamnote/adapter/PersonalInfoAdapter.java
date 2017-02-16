@@ -2,6 +2,7 @@ package com.dreamnote.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.dreamnote.R;
 import com.dreamnote.bean.DreamInfo;
 
 /**
@@ -18,8 +19,8 @@ public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfo, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder holder, DreamInfo item) {
-//        holder.setText(R.id.item_personal_name_img, item.getName())
-//                .setText(R.id.item_personal_time, item.getReleaseTime())
-//                .setText(R.id.item_personal_content, item.getContent());
+        holder.setText(R.id.item_personal_name, item.getName())
+                .setText(R.id.item_personal_time, item.getReleaseTime())
+                .setText(R.id.item_personal_content, item.getContent());
     }
 }
