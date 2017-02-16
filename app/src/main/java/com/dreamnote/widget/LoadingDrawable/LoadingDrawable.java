@@ -1,4 +1,4 @@
-package com.dreamnote.widget;
+package com.dreamnote.widget.LoadingDrawable;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
