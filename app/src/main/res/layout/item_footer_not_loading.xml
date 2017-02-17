@@ -6,4 +6,5 @@
     android:gravity="center"
     android:text="—— 全部数据 ——"
     android:textColor="@android:color/darker_gray"
-    android:textSize="10sp" />
+    android:textSize="10sp"
+    />

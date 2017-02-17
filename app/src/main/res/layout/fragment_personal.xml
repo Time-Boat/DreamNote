@@ -31,68 +31,68 @@
                     android:id="@+id/iv_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:background="@drawable/personal_head"
                     android:scaleType="fitXY"
-                    android:src="@drawable/personal_head" />
+                    android:src="@drawable/shade" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#dfdfdf"
                     android:layout_marginTop="10dp"
-                    />
+                    android:background="#dfdfdf" />
+
+                <LinearLayout
+                    android:id="@+id/personal_synopsis"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/personal" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:background="@color/white"
-                        >
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp">
 
-                        <ImageView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:layout_marginLeft="12dp"
-                            android:src="@drawable/personal" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="bottom|center_vertical"
+                            android:text="小土豆"
+                            android:textSize="16dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingLeft="10dp"
-                            >
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="bottom|center_vertical"
-                                android:text="小土豆"
-                                android:textSize="16dp"
-                                />
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="200dp"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="top|center_vertical"
-                                android:paddingTop="3dp"
-                                android:lines="1"
-                                android:textSize="12dp"
-                                android:text="你是谁？你从哪里来？你到哪里去？你是谁？你从哪里来？你到哪里去？"
-                                android:singleLine="true"/>
-                        </LinearLayout>
-
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="200dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="top|center_vertical"
+                            android:lines="1"
+                            android:paddingTop="3dp"
+                            android:singleLine="true"
+                            android:text="你是谁？你从哪里来？你到哪里去？你是谁？你从哪里来？你到哪里去？"
+                            android:textSize="12dp" />
                     </LinearLayout>
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#dfdfdf"
-                    />
+                    android:background="#dfdfdf" />
 
                 <com.dreamnote.widget.gradation.NoScrollListview
                     android:id="@+id/recycler_personal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.dreamnote.widget.gradation.NoScrollListview>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="56dp"></com.dreamnote.widget.gradation.NoScrollListview>
 
             </LinearLayout>
 
@@ -100,16 +100,54 @@
 
     </in.srain.cube.views.ptr.PtrFrameLayout>
 
-    <TextView
-        android:id="@+id/textview"
+    <LinearLayout
+        android:id="@+id/personal_llout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#00000000"
-        android:gravity="center|bottom"
-        android:paddingBottom="10dp"
-        android:text="我是标题"
-        android:textColor="@color/transparent"
-        android:textSize="18sp" />
+        android:layout_height="64dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/personal_name_img"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.2"
+            android:gravity="right"
+            android:src="@drawable/personal"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:gravity="center"
+            android:text="我的动态"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/personal_setting_img"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:src="@drawable/ic_settings_white_24dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/personal_widget_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/personal_llout"
+        android:background="@color/transparent" />
 
 </RelativeLayout>
