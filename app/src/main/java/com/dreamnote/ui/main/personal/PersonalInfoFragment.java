@@ -179,10 +179,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
 //        ALog.e("setEnabled:",y == 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
 //        ALog.e("onScrollChanged","x:"+x+"   y:"+y+"   oldx:"+oldx+"   oldy:"+oldy);
 
-//        TextView title;
-//        ImageView settingImg;
-//        View widgetView;
-
         // TODO Auto-generated method stub
         if (y <= 0) {
             //设置标题的背景颜色

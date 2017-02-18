@@ -50,6 +50,14 @@ public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfo, BaseViewHol
                 ToastUtils.showToast(context,"click share");
             }
         });
+
+        holder.getView(R.id.item_personal_name_img).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtils.showToast(context,"click item_name");
+            }
+        });
+
     }
 
 
