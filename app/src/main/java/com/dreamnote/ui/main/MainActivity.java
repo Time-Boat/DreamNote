@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.dreamnote.R;
-import com.dreamnote.ui.main.addchoose.AddChooseFragment;
+import com.dreamnote.ui.main.add.AddChooseFragment;
 import com.dreamnote.ui.main.other.OtherFramgent;
 import com.dreamnote.ui.main.personal.PersonalInfoFragment;
 

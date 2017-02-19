@@ -1,4 +1,4 @@
-package com.dreamnote.ui.main.addchoose;
+package com.dreamnote.ui.main.add;
 
 
 import android.os.Bundle;
@@ -41,6 +41,5 @@ public class AddChooseFragment extends BaseFragment {
         initStateBar(toolbar);
         return view;
     }
-
 
 }

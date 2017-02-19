@@ -23,6 +23,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
     //查询当前页的数据...
     @Override
     public void queryData(int pagination) {
+        //根据页数进行网络请求
         //模拟一条数据
         List<DreamInfo> mDreamInfo = new ArrayList<>();
         DreamInfo d = new DreamInfo();
