@@ -1,5 +1,6 @@
 package com.dreamnote.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.dreamnote.R;
-import com.dreamnote.ui.main.add.AddChooseFragment;
+import com.dreamnote.ui.main.add.AddChooseActivity;
 import com.dreamnote.ui.main.other.OtherFramgent;
 import com.dreamnote.ui.main.personal.PersonalInfoFragment;
 
@@ -46,12 +47,10 @@ public class MainActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             mFragments[0] = PersonalInfoFragment.newInstance();
-            mFragments[1] = AddChooseFragment.newInstance();
             mFragments[2] = OtherFramgent.newInstance();
-            loadMultipleRootFragment(R.id.fl_container_main_fragment, 0, mFragments[0], mFragments[1], mFragments[2]);
+            loadMultipleRootFragment(R.id.fl_container_main_fragment, 0, mFragments[0], mFragments[2]);
         } else {
             mFragments[0] = findFragment(PersonalInfoFragment.class);
-            mFragments[1] = findFragment(AddChooseFragment.class);
             mFragments[2] = findFragment(OtherFramgent.class);
         }
 
@@ -88,8 +87,13 @@ public class MainActivity extends BaseActivity {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, final boolean wasSelected) {
-                showHideFragment(mFragments[position], mFragments[bottomNavigationPreposition]);
-                bottomNavigationPreposition = position;
+                if (position==1){
+                    startActivity(new Intent(getApplicationContext(), AddChooseActivity.class));
+                }else{
+                    showHideFragment(mFragments[position], mFragments[bottomNavigationPreposition]);
+                    bottomNavigationPreposition = position;
+                }
+
             }
         });
 

@@ -2,9 +2,84 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/holo_blue_bright"
+    android:orientation="vertical"
     >
 
-    <include layout="@layout/toolbar"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        >
+
+        <ImageView
+            android:id="@+id/add_choose_img"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_choose_img"
+            android:layout_gravity="left"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="bottom|center_horizontal"
+        android:paddingBottom="60dp"
+        >
+
+        <TextView
+            android:id="@+id/add_choose_record_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_choose_record_text"
+            android:drawablePadding="8dp"
+            android:text="文字"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/add_choose_record_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_choose_record_picture"
+            android:drawablePadding="8dp"
+            android:text="图片"
+            android:gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            />
+
+        <TextView
+            android:id="@+id/add_choose_record_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_choose_record_recording"
+            android:drawablePadding="8dp"
+            android:text="录音"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        >
+
+        <ImageButton
+            android:id="@+id/add_choose_close"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="24dp"
+            android:src="@drawable/ic_add_choose_close"
+            android:background="@color/transparent"
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>
