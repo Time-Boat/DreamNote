@@ -15,7 +15,6 @@
             android:id="@+id/add_choose_img"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_choose_img"
             android:layout_gravity="left"
             />
 
@@ -52,7 +51,7 @@
             />
 
         <TextView
-            android:id="@+id/add_choose_record_recording"
+            android:id="@+id/add_choose_record_voice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_add_choose_record_recording"

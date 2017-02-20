@@ -27,7 +27,6 @@ import com.dreamnote.adapter.PersonalInfoAdapter;
 import com.dreamnote.bean.DreamInfo;
 import com.dreamnote.common.Constants;
 import com.dreamnote.utils.ToastUtils;
-import com.dreamnote.widget.gradation.GradationScrollView;
 
 import java.util.List;
 
@@ -39,15 +38,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 
-public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Presenter> implements PersonalInfoContract.View,GradationScrollView.ScrollViewListener{
+public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Presenter> implements PersonalInfoContract.View{
 
     private static final String TAG = PersonalInfoFragment.class.getSimpleName();
     @BindView(R.id.recycler_personal)
     RecyclerView mRecyclerView;
     @BindView(R.id.ptrframelayout)
     PtrFrameLayout mPtrframelayout;
-    @BindView(R.id.scrollview)
-    GradationScrollView mGradationScrollView;
 
     //判断是否是加载状态
     private boolean isLoading;
@@ -76,9 +73,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     View widgetView;
     private int height;
 
-    @BindView(R.id.iv_banner)
     ImageView ivBanner;
-    @BindView(R.id.personal_synopsis)
     LinearLayout mPersonalSynopsis;
 
     public static PersonalInfoFragment newInstance() {
@@ -103,11 +98,129 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initListeners();
         initData();
         super.onViewCreated(view, savedInstanceState);
     }
 
+    //通过Tint来改变矢量图颜色
+    public void changeImg(int r,int g,int b){
+        Drawable drawable = ContextCompat.getDrawable(_mActivity,R.drawable.ic_settings_black_24dp);
+        //简单的使用tint改变drawable颜色
+        Drawable drawable1 = getTintDrawable(drawable,Color.rgb(r,g,b));
+        settingImg.setImageDrawable(drawable1);
+    }
+
+    private Drawable getTintDrawable(Drawable drawable,@ColorInt int color) {
+        Drawable.ConstantState state = drawable.getConstantState();
+        Drawable drawable1 = DrawableCompat.wrap(state == null ? drawable : state.newDrawable()).mutate();
+        drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        DrawableCompat.setTint(drawable1, color);
+        return drawable1;
+    }
+
+    //能监听appBar折叠的上下偏移量
+//    @Override
+//    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+//        if (mRecyclerView == null) return;
+//        //当appBar的折叠效果完全展开的时候才允许下拉刷新
+//        mPtrframelayout.setEnabled(i >= 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
+//
+////        ALog.e("-------->off:" + i + "  ScrollRange:" + appBarLayout.getTotalScrollRange() + "  height:" + appBarLayout.getHeight());
+//    }
+
+    //沉降的initData方法是在懒加载中实现的，后期在做修改
+    private void initData() {
+        //为recyclerView设置禁止嵌套滑动     解决了滑动不流畅问题，具体为什么不知道。。。
+//        mRecyclerView.setNestedScrollingEnabled(false);
+
+        mLinearLayoutManager = new LinearLayoutManager(_mActivity);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mFooterLoading = getLayoutInflater(null).inflate(R.layout.item_footer_loading, (ViewGroup) mRecyclerView.getParent(), false);
+        mFooterNotLoading = getLayoutInflater(null).inflate(R.layout.item_footer_not_loading, (ViewGroup) mRecyclerView.getParent(), false);
+        mFooterError = getLayoutInflater(null).inflate(R.layout.item_footer_error, (ViewGroup) mRecyclerView.getParent(), false);
+        mFooterError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(_mActivity,"点击FooterError重新加载",Toast.LENGTH_SHORT).show();
+                mPersonalInfoAdapter.removeAllFooterView();
+                mPersonalInfoAdapter.addFooterView(mFooterLoading);
+                mPresenter.queryData(pagination);
+            }
+        });
+        setAdapter();
+        setLoadMore();
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(_mActivity,"点击Item:"+position,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            int dy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int x, int y) {
+                dy+=y;
+//                ALog.e("onScrollChanged","x:"+x+"   y:"+y+"   a+y:"+(dy+=y));
+//        //当appBar的折叠效果完全展开的时候才允许下拉刷新
+//                当recyclerView到最顶端的时候才能进行刷新
+                mPtrframelayout.setEnabled(dy == 0 /*|| DesignViewUtils.isSlideToBottom(mRecyclerView)*/ ? true : false);
+
+                //DesignViewUtils.isSlideToBottom(mRecyclerView)始终为true后期在做修改
+//        ALog.e("setEnabled:",y == 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
+//        ALog.e("onScrollChanged","x:"+x+"   y:"+y+"   oldx:"+oldx+"   oldy:"+oldy);
+
+                // TODO Auto-generated method stub
+                if (dy <= 0) {
+                    //设置标题的背景颜色
+                    mLinearLayout.setBackgroundColor(Color.argb((int) 0, 255,255,255));
+                    title.setTextColor(Color.rgb(255,255,255));
+                    changeImg(255,255,255);
+//            dfdfdf
+                    widgetView.setBackgroundColor(Color.argb((int) 0, 255,255,255));
+                } else if (dy > 0 && dy <= height) {      //滑 动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+                    float scale = (float) dy / height;
+                    float alpha = (242 * scale);
+                    int color = (int)(255 - alpha);
+                    title.setTextColor(Color.rgb(color,color,color));
+                    changeImg(color,color,color);
+                    mLinearLayout.setBackgroundColor(Color.argb((int) alpha, 255,255,255));
+                    widgetView.setBackgroundColor(Color.argb((int) alpha, 0xdf,0xdf,0xdf));
+                } else {    //滑动到banner下面设置普通颜色
+                    mLinearLayout.setBackgroundColor(Color.argb( 245, 255,255,255));
+                }
+                super.onScrolled(recyclerView, x, y);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+        mRecyclerView.setAdapter(mPersonalInfoAdapter);
+//        initPageStateLayout(pagestatelayout);
+        initPtrFrameLayout(mPtrframelayout);
+
+    }
+
+    private void addHeader() {
+        View headerView = getHeaderView();
+        mPersonalInfoAdapter.addHeaderView(headerView);
+    }
+
+
+    private View getHeaderView() {
+        View view = getLayoutInflater(null).inflate(R.layout.fragment_personal_head, (ViewGroup) mRecyclerView.getParent(), false);
+        ivBanner = (ImageView)view.findViewById(R.id.iv_banner);
+        mPersonalSynopsis = (LinearLayout)view.findViewById(R.id.personal_synopsis);
+
+        initListeners();
+
+        return view;
+    }
 
     /**
      * 获取顶部图片高度后，设置滚动监听
@@ -129,7 +242,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 }
                 height = ivBanner.getHeight();
 
-                mGradationScrollView.setScrollViewListener(PersonalInfoFragment.this);
+//                mGradationScrollView.setScrollViewListener(PersonalInfoFragment.this);
             }
         });
 
@@ -156,113 +269,12 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 ToastUtils.showToast(_mActivity,"个人简介");
             }
         });
-
-    }
-
-    /**
-     * 滑动监听
-     * @param scrollView
-     * @param x
-     * @param y
-     * @param oldx
-     * @param oldy
-     */
-    @Override
-    public void onScrollChanged(GradationScrollView scrollView, int x, int y,
-                                int oldx, int oldy) {
-
-        if (mRecyclerView == null) return;
-//        //当appBar的折叠效果完全展开的时候才允许下拉刷新
-        mPtrframelayout.setEnabled(y == 0 /*|| DesignViewUtils.isSlideToBottom(mRecyclerView)*/ ? true : false);
-
-        //DesignViewUtils.isSlideToBottom(mRecyclerView)始终为true后期在做修改
-//        ALog.e("setEnabled:",y == 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
-//        ALog.e("onScrollChanged","x:"+x+"   y:"+y+"   oldx:"+oldx+"   oldy:"+oldy);
-
-        // TODO Auto-generated method stub
-        if (y <= 0) {
-            //设置标题的背景颜色
-            mLinearLayout.setBackgroundColor(Color.argb((int) 0, 255,255,255));
-            title.setTextColor(Color.rgb(255,255,255));
-            changeImg(255,255,255);
-//            dfdfdf
-            widgetView.setBackgroundColor(Color.argb((int) 0, 255,255,255));
-        } else if (y > 0 && y <= height) {      //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-            float scale = (float) y / height;
-            float alpha = (242 * scale);
-            int color = (int)(255 - alpha);
-            title.setTextColor(Color.rgb(color,color,color));
-            changeImg(color,color,color);
-            mLinearLayout.setBackgroundColor(Color.argb((int) alpha, 255,255,255));
-            widgetView.setBackgroundColor(Color.argb((int) alpha, 0xdf,0xdf,0xdf));
-        } else {    //滑动到banner下面设置普通颜色
-            mLinearLayout.setBackgroundColor(Color.argb( 245, 255,255,255));
-        }
-    }
-
-    //通过Tint来改变矢量图颜色
-    public void changeImg(int r,int g,int b){
-        Drawable drawable = ContextCompat.getDrawable(_mActivity,R.drawable.ic_settings_black_24dp);
-        //简单的使用tint改变drawable颜色
-        Drawable drawable1 = getTintDrawable(drawable,Color.rgb(r,g,b));
-        settingImg.setImageDrawable(drawable1);
-    }
-
-    private Drawable getTintDrawable(Drawable drawable,@ColorInt int color) {
-        Drawable.ConstantState state = drawable.getConstantState();
-        Drawable drawable1 = DrawableCompat.wrap(state == null ? drawable : state.newDrawable()).mutate();
-        drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        DrawableCompat.setTint(drawable1, color);
-        return drawable1;
-    }
-
-//    //能监听appBar折叠的上下偏移量
-//    @Override
-//    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-//        if (mRecyclerView == null) return;
-//        //当appBar的折叠效果完全展开的时候才允许下拉刷新
-//        mPtrframelayout.setEnabled(i >= 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
-//
-////        ALog.e("-------->off:" + i + "  ScrollRange:" + appBarLayout.getTotalScrollRange() + "  height:" + appBarLayout.getHeight());
-//    }
-
-    //沉降的initData方法是在懒加载中实现的，后期在做修改
-    private void initData() {
-
-        //为recyclerView设置禁止嵌套滑动     解决了滑动不流畅问题，具体为什么不知道。。。
-        mRecyclerView.setNestedScrollingEnabled(false);
-
-        mLinearLayoutManager = new LinearLayoutManager(_mActivity);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mFooterLoading = getLayoutInflater(null).inflate(R.layout.item_footer_loading, (ViewGroup) mRecyclerView.getParent(), false);
-        mFooterNotLoading = getLayoutInflater(null).inflate(R.layout.item_footer_not_loading, (ViewGroup) mRecyclerView.getParent(), false);
-        mFooterError = getLayoutInflater(null).inflate(R.layout.item_footer_error, (ViewGroup) mRecyclerView.getParent(), false);
-        mFooterError.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(_mActivity,"点击FooterError重新加载",Toast.LENGTH_SHORT).show();
-                mPersonalInfoAdapter.removeAllFooterView();
-                mPersonalInfoAdapter.addFooterView(mFooterLoading);
-                mPresenter.queryData(pagination);
-            }
-        });
-        setAdapter();
-        setLoadMore();
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(_mActivity,"点击Item:"+position,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mRecyclerView.setAdapter(mPersonalInfoAdapter);
-//        initPageStateLayout(pagestatelayout);
-        initPtrFrameLayout(mPtrframelayout);
-
     }
 
     private void setAdapter() {
         mPersonalInfoAdapter = new PersonalInfoAdapter(_mActivity);
+        //添加头部
+        addHeader();
         mPersonalInfoAdapter.removeAllFooterView();
     }
 
@@ -338,4 +350,5 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     public void error(Throwable t) {
 
     }
+
 }

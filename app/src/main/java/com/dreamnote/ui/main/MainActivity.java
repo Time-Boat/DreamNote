@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.contract.base.BaseContract;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -35,6 +36,9 @@ public class MainActivity extends BaseActivity {
     private SupportFragment[] mFragments = new SupportFragment[3];
 
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
+
+    //记录启动activity之前是哪一个activity，在activity被销毁，回到这里之后哪一个AHButton按钮被选中
+    private int fragmentPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +92,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabSelected(int position, final boolean wasSelected) {
                 if (position==1){
-                    startActivity(new Intent(getApplicationContext(), AddChooseActivity.class));
+                    startActivity(new Intent(getBaseContext(), AddChooseActivity.class));
                 }else{
+                    fragmentPosition = position;
                     showHideFragment(mFragments[position], mFragments[bottomNavigationPreposition]);
                     bottomNavigationPreposition = position;
                 }
@@ -106,6 +111,16 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
+    @Override
+    protected void onResume() {
+        ALog.e(TAG,"onResume");
+        bottomNavigation.setCurrentItem(fragmentPosition);
+        super.onResume();
+    }
 
-
+    @Override
+    protected void onStart() {
+        ALog.e(TAG,"onStart");
+        super.onStart();
+    }
 }
