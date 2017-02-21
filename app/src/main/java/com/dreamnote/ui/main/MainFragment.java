@@ -86,6 +86,7 @@ public class MainFragment extends BaseFragment {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_menu_camera, R.color.white);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_menu_camera, R.color.white);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_menu_camera, R.color.white);
+
         bottomNavigationItems.add(item1);
         bottomNavigationItems.add(item2);
         bottomNavigationItems.add(item3);
@@ -103,6 +104,7 @@ public class MainFragment extends BaseFragment {
             public void onTabSelected(int position, final boolean wasSelected) {
                 if (position == 1) {
                     startActivity(new Intent(_mActivity, AddChooseActivity.class));
+                    bottomNavigation.setCurrentItem(fragmentPosition);
                 } else {
                     fragmentPosition = position;
                     showHideFragment(mFragments[position], mFragments[bottomNavigationPreposition]);
@@ -118,7 +120,6 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onResume() {
         ALog.e(TAG, "onResume");
-        bottomNavigation.setCurrentItem(fragmentPosition);
         super.onResume();
     }
 

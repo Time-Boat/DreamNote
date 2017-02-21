@@ -345,6 +345,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 }
                 this.pagination = 0;
                 mPersonalInfoAdapter.setNewData(mDreamInfo);
+                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
                 //设置一下会重新刷新整个item的位置，即使不是第一个item位置刷新，也会重新刷新定位到第一个。
                 mRecyclerView.setAdapter(mPersonalInfoAdapter);
             } else {
