@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightest_gray"
     >
 
     <in.srain.cube.views.ptr.PtrFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,15 +16,15 @@
         cube_ptr:ptr_keep_header_when_refresh="true"
         cube_ptr:ptr_pull_to_fresh="false"
         cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-        cube_ptr:ptr_resistance="1.7">
-
+        cube_ptr:ptr_resistance="1.7"
+        android:layout_marginBottom="56dp"
+        >
 
         <android.support.v7.widget.RecyclerView
-
             android:id="@+id/recycler_personal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp">
+            >
 
         </android.support.v7.widget.RecyclerView>
 
@@ -34,11 +33,12 @@
     <LinearLayout
         android:id="@+id/personal_llout"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:background="@color/transparent"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/personal_name_img"

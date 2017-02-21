@@ -26,6 +26,7 @@ import com.dreamnote.R;
 import com.dreamnote.adapter.PersonalInfoAdapter;
 import com.dreamnote.bean.DreamInfo;
 import com.dreamnote.common.Constants;
+import com.dreamnote.ui.main.MainActivity;
 import com.dreamnote.utils.ToastUtils;
 
 import java.util.List;
@@ -91,15 +92,15 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
         ButterKnife.bind(this, view);
-//        initStateBar(toolbar);
 
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initData();
         super.onViewCreated(view, savedInstanceState);
+
+        initData();
     }
 
     //通过Tint来改变矢量图颜色
@@ -149,7 +150,16 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
         });
         setAdapter();
         setLoadMore();
+        setClickListener();
 
+        mRecyclerView.setAdapter(mPersonalInfoAdapter);
+//        initPageStateLayout(pagestatelayout);
+        initPtrFrameLayout(mPtrframelayout);
+
+    }
+
+    //添加RecyclerView的点击事件
+    private void setClickListener() {
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
 
             //整个item点击回调
@@ -161,7 +171,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
             //子控件点击回调
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                ALog.e(TAG,"item:id="+view.getId()+",position="+position);
+//                ALog.e(TAG,"item:id="+view.getId()+",position="+position);
                 switch (view.getId()){
                     case R.id.item_personal_like:
                         ALog.e(TAG,"like");
@@ -184,54 +194,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 }
             }
         });
-
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            int dy = 0;
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int x, int y) {
-                dy+=y;
-//                ALog.e("onScrollChanged","x:"+x+"   y:"+y+"   a+y:"+(dy+=y));
-//        //当appBar的折叠效果完全展开的时候才允许下拉刷新
-//                当recyclerView到最顶端的时候才能进行刷新
-                mPtrframelayout.setEnabled(dy == 0 /*|| DesignViewUtils.isSlideToBottom(mRecyclerView)*/ ? true : false);
-
-                //DesignViewUtils.isSlideToBottom(mRecyclerView)始终为true后期在做修改
-//        ALog.e("setEnabled:",y == 0|| DesignViewUtils.isSlideToBottom(mRecyclerView) ? true : false);
-//        ALog.e("onScrollChanged","x:"+x+"   y:"+y+"   oldx:"+oldx+"   oldy:"+oldy);
-
-                // TODO Auto-generated method stub
-                if (dy <= 0) {
-                    //设置标题的背景颜色
-                    mLinearLayout.setBackgroundColor(Color.argb((int) 0, 255,255,255));
-                    title.setTextColor(Color.rgb(255,255,255));
-                    changeImg(255,255,255);
-//            dfdfdf
-                    widgetView.setBackgroundColor(Color.argb((int) 0, 255,255,255));
-                } else if (dy > 0 && dy <= height) {      //滑 动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-                    float scale = (float) dy / height;
-                    float alpha = (242 * scale);
-                    int color = (int)(255 - alpha);
-                    title.setTextColor(Color.rgb(color,color,color));
-                    changeImg(color,color,color);
-                    mLinearLayout.setBackgroundColor(Color.argb((int) alpha, 255,255,255));
-                    widgetView.setBackgroundColor(Color.argb((int) alpha, 0xdf,0xdf,0xdf));
-                } else {    //滑动到banner下面设置普通颜色
-                    mLinearLayout.setBackgroundColor(Color.argb( 245, 255,255,255));
-                }
-                super.onScrolled(recyclerView, x, y);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-
-        mRecyclerView.setAdapter(mPersonalInfoAdapter);
-//        initPageStateLayout(pagestatelayout);
-        initPtrFrameLayout(mPtrframelayout);
-
     }
 
     private void addHeader() {
@@ -327,14 +289,47 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 }
             }
 
+            int dy = 0;
+
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+            public void onScrolled(RecyclerView recyclerView, int x, int y) {
+                dy+=y;
+                //当appBar的折叠效果完全展开的时候才允许下拉刷新
+//                当recyclerView到最顶端的时候才能进行刷新
+                mPtrframelayout.setEnabled(dy == 0 /*|| DesignViewUtils.isSlideToBottom(mRecyclerView)*/ ? true : false);
+
+                //DesignViewUtils.isSlideToBottom(mRecyclerView)始终为true后期在做修改
+
+                // TODO Auto-generated method stub
+                if (dy <= 0) {
+                    //设置标题的背景颜色
+                    mLinearLayout.setBackgroundColor(Color.argb((int) 0, 255,255,255));
+                    title.setTextColor(Color.rgb(255,255,255));
+                    changeImg(255,255,255);
+                    widgetView.setBackgroundColor(Color.argb((int) 0, 255,255,255));
+                } else if (dy > 0 && dy <= height) {      //滑 动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+                    float scale = (float) dy / height;
+                    float alpha = (242 * scale);
+                    int color = (int)(255 - alpha);
+                    title.setTextColor(Color.rgb(color,color,color));
+                    changeImg(color,color,color);
+                    mLinearLayout.setBackgroundColor(Color.argb((int) alpha, 255,255,255));
+                    widgetView.setBackgroundColor(Color.argb((int) alpha, 0xdf,0xdf,0xdf));
+                } else {    //滑动到banner下面设置普通颜色
+                    mLinearLayout.setBackgroundColor(Color.argb( 242, 255,255,255));
+                    title.setTextColor(Color.rgb(0,0,0));
+                    changeImg(0,0,0);
+                    widgetView.setBackgroundColor(Color.argb((int) 242, 0xdf,0xdf,0xdf));
+                }
+
+                super.onScrolled(recyclerView, x, y);
+
                 if (mLinearLayoutManager == null) {
                     return;
                 }
                 lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
             }
+
         });
     }
 
@@ -358,16 +353,26 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
             //靠这个参数控制最后不需要请求数据
             isLoading = false;
         } else {
-            mPersonalInfoAdapter.removeAllFooterView();
-            mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
-//            if (pagination == 0) {
-//                Toast.makeText(_mActivity,"当前页无数据",Toast.LENGTH_SHORT).show();
-//            } else {
-//                //此处一定要先清除之前加载的FooterView，否则会报错。
-//                mPersonalInfoAdapter.removeAllFooterView();
-//                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
-//            }
+//            mPersonalInfoAdapter.removeAllFooterView();
+//            mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+            if (pagination == 0) {
+                Toast.makeText(_mActivity,"当前页无数据",Toast.LENGTH_SHORT).show();
+            } else {
+                //此处一定要先清除之前加载的FooterView，否则会报错。
+                mPersonalInfoAdapter.removeAllFooterView();
+                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+                //因为修改了RecyclerView的内容，所以要通知adapter更新一下
+                mPersonalInfoAdapter.notifyDataSetChanged();
+            }
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        ALog.e("11111111111111");
+//        _mActivity.showFragmentStackHierarchyView();
+//        _mActivity.logFragmentStackHierarchy(TAG);
     }
 
     @Override
