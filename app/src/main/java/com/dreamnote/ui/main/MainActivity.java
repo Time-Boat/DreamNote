@@ -98,7 +98,6 @@ public class MainActivity extends BaseActivity {
                     showHideFragment(mFragments[position], mFragments[bottomNavigationPreposition]);
                     bottomNavigationPreposition = position;
                 }
-
             }
         });
 

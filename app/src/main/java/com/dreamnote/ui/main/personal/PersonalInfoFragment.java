@@ -149,15 +149,43 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
         });
         setAdapter();
         setLoadMore();
+
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+
+            //整个item点击回调
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(_mActivity,"点击Item:"+position,Toast.LENGTH_SHORT).show();
+                ALog.e(TAG,"item:id="+view.getId()+",position="+position);
+            }
+
+            //子控件点击回调
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                ALog.e(TAG,"item:id="+view.getId()+",position="+position);
+                switch (view.getId()){
+                    case R.id.item_personal_like:
+                        ALog.e(TAG,"like");
+                        break;
+                    case R.id.item_personal_more:
+                        ALog.e(TAG,"more");
+                        break;
+                    case R.id.item_personal_share:
+                        ALog.e(TAG,"share");
+                        break;
+                    case R.id.item_personal_name_img:
+                        ALog.e(TAG,"nameImg");
+                        break;
+                    case R.id.item_personal_content_img:
+                        ALog.e(TAG,"contentImg");
+                        break;
+                    default:
+                        ALog.e(TAG,"other");
+                        break;
+                }
             }
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             int dy = 0;
 
             @Override
@@ -269,6 +297,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 ToastUtils.showToast(_mActivity,"个人简介");
             }
         });
+
     }
 
     private void setAdapter() {

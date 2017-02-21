@@ -34,34 +34,45 @@ public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfo, BaseViewHol
         holder.setText(R.id.item_personal_name, item.getName())
                 .setText(R.id.item_personal_time, item.getReleaseTime())
                 .setText(R.id.item_personal_content, item.getContent());
+        holder.addOnClickListener(R.id.item_personal_like);
 
-        holder.getView(R.id.item_personal_like).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showToast(context,"click like");
-            }
-        });
+//        holder.getView(R.id.item_personal_like).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ToastUtils.showToast(context,"click like");
+//            }
+//        });
+//
+//        holder.getView(R.id.item_personal_more).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ToastUtils.showToast(context,"click more");
+//            }
+//        });
+//
+//        holder.getView(R.id.item_personal_share).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ToastUtils.showToast(context,"click share");
+//            }
+//        });
+//
+//        holder.getView(R.id.item_personal_name_img).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ToastUtils.showToast(context,"click item_name");
+//            }
+//        });
 
-        holder.getView(R.id.item_personal_more).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showToast(context,"click more");
-            }
-        });
+        holder.addOnClickListener(R.id.item_personal_like);
 
-        holder.getView(R.id.item_personal_share).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showToast(context,"click share");
-            }
-        });
+        holder.addOnClickListener(R.id.item_personal_more);
 
-        holder.getView(R.id.item_personal_name_img).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showToast(context,"click item_name");
-            }
-        });
+        holder.addOnClickListener(R.id.item_personal_share);
+
+        holder.addOnClickListener(R.id.item_personal_name_img);
+
+        holder.addOnClickListener(R.id.item_personal_content_img);
 
     }
 
