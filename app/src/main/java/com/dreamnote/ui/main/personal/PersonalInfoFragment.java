@@ -339,8 +339,8 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
         if (mDreamInfo.size() > 0) {
             if (pagination == 0) {
                 //说明是第一页，或者是刷新,把页码重置为0，代表第一页。
+                mPersonalInfoAdapter.removeAllFooterView();
                 if (mDreamInfo.size() >= Constants.PAGE_SIZE) {
-                    mPersonalInfoAdapter.removeAllFooterView();
                     mPersonalInfoAdapter.addFooterView(mFooterLoading);
                 }
                 this.pagination = 0;
