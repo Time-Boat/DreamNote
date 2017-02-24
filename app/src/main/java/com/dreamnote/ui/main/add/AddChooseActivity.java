@@ -38,7 +38,7 @@ public class AddChooseActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_add_choose);
+        setContentView(R.layout.activity_add_choose);
         ButterKnife.bind(this);
 
         addChooseClose.setOnClickListener(this);
@@ -55,7 +55,6 @@ public class AddChooseActivity extends BaseActivity implements View.OnClickListe
                 asBitmap().
                 into(addChooseImg);
     }
-
 
     @Override
     public void onClick(View v) {

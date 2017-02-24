@@ -1,6 +1,6 @@
 package com.dreamnote.ui.main.personal;
 
-import com.dreamnote.bean.DreamInfo;
+import com.dreamnote.bean.DreamInfoBean;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import cn.itsite.abase.mvp.contract.base.BaseContract;
 public interface PersonalInfoContract extends BaseContract{
 
     interface View extends BaseContract.View {
-        void refresh(List<DreamInfo> mStaffData, int pagination);
+        void refresh(List<DreamInfoBean> mStaffData, int pagination);
 
     }
 

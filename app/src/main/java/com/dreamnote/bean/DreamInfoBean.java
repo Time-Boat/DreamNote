@@ -6,7 +6,7 @@ package com.dreamnote.bean;
  * @email 770164810@qq.com
  */
 
-public class DreamInfo {
+public class DreamInfoBean {
 
     /**
      * avatar : null

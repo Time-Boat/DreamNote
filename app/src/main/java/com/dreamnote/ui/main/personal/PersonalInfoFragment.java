@@ -24,9 +24,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dreamnote.R;
 import com.dreamnote.adapter.PersonalInfoAdapter;
-import com.dreamnote.bean.DreamInfo;
+import com.dreamnote.bean.DreamInfoBean;
 import com.dreamnote.common.Constants;
-import com.dreamnote.ui.main.MainActivity;
 import com.dreamnote.utils.ToastUtils;
 
 import java.util.List;
@@ -334,7 +333,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     }
 
     @Override
-    public void refresh(List<DreamInfo> mDreamInfo, int pagination) {
+    public void refresh(List<DreamInfoBean> mDreamInfo, int pagination) {
         ALog.e("refresh:",mDreamInfo.size());
         if (mDreamInfo.size() > 0) {
             if (pagination == 0) {

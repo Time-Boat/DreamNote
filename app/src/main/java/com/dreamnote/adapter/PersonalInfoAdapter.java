@@ -1,15 +1,11 @@
 package com.dreamnote.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dreamnote.R;
-import com.dreamnote.bean.DreamInfo;
-import com.dreamnote.utils.ToastUtils;
+import com.dreamnote.bean.DreamInfoBean;
 
 import cn.itsite.abase.log.ALog;
 
@@ -19,7 +15,7 @@ import cn.itsite.abase.log.ALog;
  * @email 770164810@qq.com
  */
 
-public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfo, BaseViewHolder> {
+public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfoBean, BaseViewHolder> {
 
     Context context;
 
@@ -29,7 +25,7 @@ public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfo, BaseViewHol
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, DreamInfo item) {
+    protected void convert(BaseViewHolder holder, DreamInfoBean item) {
         ALog.e(holder.getLayoutPosition());
         holder.setText(R.id.item_personal_name, item.getName())
                 .setText(R.id.item_personal_time, item.getReleaseTime())
