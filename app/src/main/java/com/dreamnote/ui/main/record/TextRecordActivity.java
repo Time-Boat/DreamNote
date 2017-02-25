@@ -25,6 +25,12 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_text);
+        
+        initData();
+        
+    }
+
+    private void initData() {
     }
 
     @Override
