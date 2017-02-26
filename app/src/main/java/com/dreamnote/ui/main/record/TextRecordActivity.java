@@ -27,7 +27,11 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
         setContentView(R.layout.activity_record_text);
         
         initData();
+        initView();
         
+    }
+
+    private void initView() {
     }
 
     private void initData() {
