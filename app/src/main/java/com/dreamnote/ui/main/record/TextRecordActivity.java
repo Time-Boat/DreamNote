@@ -33,7 +33,7 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
     }
 
     private void initView() {
-        ALog.e("","");
+        ALog.e("a","a");
     }
 
     private void initData() {
