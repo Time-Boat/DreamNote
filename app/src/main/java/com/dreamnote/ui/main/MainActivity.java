@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity {
 
         //在MainActivity中使用loadRootFragment方法加载Fragment，被加载的页面不可被点击和滑动
         //使用loadMultipleRootFragment则可以，什么鬼...
+        //更新了版本就可以了
         if (savedInstanceState == null) {
             loadRootFragment(R.id.fl_main_activity, MainFragment.newInstance());
         }

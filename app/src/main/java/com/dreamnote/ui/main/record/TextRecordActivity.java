@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.dreamnote.R;
 
-import cn.itsite.abase.log.ALog;
 import cn.itsite.abase.mvp.view.base.BaseActivity;
 
 /**
@@ -33,7 +32,7 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
     }
 
     private void initView() {
-        ALog.e("a","a");
+
     }
 
     private void initData() {

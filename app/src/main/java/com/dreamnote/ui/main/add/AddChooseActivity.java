@@ -1,5 +1,6 @@
 package com.dreamnote.ui.main.add;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dreamnote.R;
+import com.dreamnote.ui.main.record.TextRecordActivity;
 import com.dreamnote.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -61,6 +63,8 @@ public class AddChooseActivity extends BaseActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.add_choose_record_text:
                 ToastUtils.showToast(this, "添加文字");
+                startActivity(new Intent(this,TextRecordActivity.class));
+                finish();
                 break;
             case R.id.add_choose_record_picture:
                 ToastUtils.showToast(this, "添加图片");
