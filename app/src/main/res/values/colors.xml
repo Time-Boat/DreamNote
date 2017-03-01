@@ -372,4 +372,6 @@
     <!-- 12% black (foreground) -->
     <color name="black_12_percent_alpha">#1f000000</color>
 
+    <color name="black_6_percent_alpha">#08000000</color>
+
 </resources>
