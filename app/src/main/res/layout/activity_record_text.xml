@@ -15,7 +15,7 @@
         >
 
         <TextView
-            android:id="@+id/toolbar_personal_img"
+            android:id="@+id/toolbar_record_cancel"
             android:gravity="center"
             android:layout_width="48dp"
             android:layout_height="32dp"
@@ -36,7 +36,7 @@
             />
 
         <TextView
-            android:id="@+id/toolbar_setting_img"
+            android:id="@+id/toolbar_record_release"
             android:gravity="center"
             android:layout_width="48dp"
             android:layout_height="32dp"
@@ -63,7 +63,6 @@
                 android:id="@+id/record_text_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:gravity="start"
                 android:hint="梦..."
                 android:padding="12dp"
@@ -76,13 +75,14 @@
             android:layout_width="65dp"
             android:layout_height="30dp"
             android:background="@drawable/other_visible"
-            android:drawableLeft="@drawable/ic_public_black_18dp"
+            android:drawableLeft="@drawable/ic_lock_outline_black_18dp"
             android:gravity="center"
             android:layout_gravity="right"
-            android:text="公开"
+            android:text="私有"
             android:textColor="#298496"
             android:textSize="14sp"
             android:layout_margin="20dp"
+            android:clickable="true"
             />
 
         <LinearLayout

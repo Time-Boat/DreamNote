@@ -75,6 +75,8 @@ public class AddChooseActivity extends BaseActivity implements View.OnClickListe
             case R.id.add_choose_close:
                 finish();
                 break;
+            default:
+                break;
         }
     }
 

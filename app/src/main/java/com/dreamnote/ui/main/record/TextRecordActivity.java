@@ -2,16 +2,19 @@ package com.dreamnote.ui.main.record;
 
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dreamnote.R;
+import com.dreamnote.utils.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -30,12 +33,12 @@ import cn.itsite.abase.utils.ScreenUtils;
 
 public class TextRecordActivity extends BaseActivity<TextRecordContract.Presenter> implements TextRecordContract.View {
 
-    @BindView(R.id.toolbar_personal_img)
-    TextView toolbarPersonalImg;
+    @BindView(R.id.toolbar_record_cancel)
+    TextView toolbarRecordCancel;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @BindView(R.id.toolbar_setting_img)
-    TextView toolbarSettingImg;
+    @BindView(R.id.toolbar_record_release)
+    TextView toolbarRecordRelease;
     @BindView(R.id.toolbar_toolbar)
     Toolbar toolbarToolbar;
     @BindView(R.id.record_text_content)
@@ -46,6 +49,12 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
     LinearLayout recordTextSoftKeyboard;
 
     int screenHeight = 0;
+    //要发布的信息是不是公开的
+    private Boolean isPublic = false;
+
+    private OnSoftKeyboardStateChangedListener mKeyboardStateListener;      //软键盘状态监听列表
+    private ViewTreeObserver.OnGlobalLayoutListener mLayoutChangeListener;
+    private boolean mIsSoftKeyboardShowing;
 
     @NonNull
     @Override
@@ -53,34 +62,95 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
         return new TextRecordPresenter(this);
     }
 
-    public interface OnSoftKeyboardStateChangedListener {
-        public void OnSoftKeyboardStateChanged(boolean isKeyBoardShow, int keyboardHeight);
-    }
-
-    //注册软键盘状态变化监听
-    public void addSoftKeyboardChangedListener(OnSoftKeyboardStateChangedListener listener) {
-        mKeyboardStateListener = listener;
-    }
-    //取消软键盘状态变化监听
-    public void removeSoftKeyboardChangedListener() {
-        mKeyboardStateListener = null;
-    }
-
-    private OnSoftKeyboardStateChangedListener mKeyboardStateListener;      //软键盘状态监听列表
-    private ViewTreeObserver.OnGlobalLayoutListener mLayoutChangeListener;
-    private boolean mIsSoftKeyboardShowing;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_text);
         ButterKnife.bind(this);
 
+        initSoftKeyboardListener();
+        initListener();
+
+    }
+
+    private void initListener() {
+        recordTextOtherVisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView)v;
+                if(isPublic){
+                    Drawable nav_up = getResources().getDrawable(R.drawable.ic_lock_outline_black_18dp);
+                    nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+                    recordTextOtherVisible.setCompoundDrawables(nav_up, null, null, null);
+                    tv.setText("私有");
+                    isPublic = false;
+                }else{
+                    Drawable nav_up = getResources().getDrawable(R.drawable.ic_public_black_18dp);
+                    nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+                    recordTextOtherVisible.setCompoundDrawables(nav_up, null, null, null);
+                    tv.setText("公开");
+                    isPublic = true;
+                }
+            }
+        });
+
+        toolbarRecordCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToast(getBaseContext(), "取消发布");
+                finish();
+            }
+        });
+
+        toolbarRecordRelease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToast(getBaseContext(), "发布");
+//                finish();
+            }
+        });
+    }
+
+//    @Override
+//    public void onClick(View v) {
+//        ToastUtils.showToast(this, "aaaaaa");
+//        switch(v.getId()){
+//            case R.id.record_text_other_visible:
+//                TextView tv = (TextView)v;
+//                if(isPublic){
+//                    Drawable nav_up = getResources().getDrawable(R.drawable.ic_lock_outline_black_18dp);
+//                    nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+//                    recordTextOtherVisible.setCompoundDrawables(nav_up, null, null, null);
+//                    tv.setText("私有");
+//                    isPublic = false;
+//                }else{
+//                    Drawable nav_up = getResources().getDrawable(R.drawable.ic_public_black_18dp);
+//                    nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+//                    recordTextOtherVisible.setCompoundDrawables(nav_up, null, null, null);
+//                    tv.setText("公开");
+//                    isPublic = true;
+//                }
+//                break;
+//            case R.id.toolbar_personal_img:
+//                ToastUtils.showToast(this, "取消发布");
+//                finish();
+//                break;
+//            case R.id.toolbar_setting_img:
+//                ToastUtils.showToast(this, "发布");
+//                finish();
+//                break;
+//            default:
+//                break;
+//        }
+//    }
+
+    private void initSoftKeyboardListener() {
+        //获取屏幕高度
         screenHeight = ScreenUtils.getScreenHeight(this);
 
         mIsSoftKeyboardShowing = false;
 
-
+        //设置整个view树的监听
         mLayoutChangeListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -150,7 +220,20 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
         }
         removeSoftKeyboardChangedListener();
         super.onDestroy();
-    };
+    }
+
+    public interface OnSoftKeyboardStateChangedListener {
+        public void OnSoftKeyboardStateChanged(boolean isKeyBoardShow, int keyboardHeight);
+    }
+
+    //注册软键盘状态变化监听
+    public void addSoftKeyboardChangedListener(OnSoftKeyboardStateChangedListener listener) {
+        mKeyboardStateListener = listener;
+    }
+    //取消软键盘状态变化监听
+    public void removeSoftKeyboardChangedListener() {
+        mKeyboardStateListener = null;
+    }
 
     @Override
     public void end() {
