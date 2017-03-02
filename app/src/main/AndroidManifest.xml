@@ -30,7 +30,7 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustPan">
-        </activity>
+    </activity>
 
         <activity android:name=".ui.main.add.AddChooseActivity"></activity>
 

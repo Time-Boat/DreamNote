@@ -6,9 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dreamnote.R;
@@ -43,7 +43,7 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
     @BindView(R.id.record_text_other_visible)
     TextView recordTextOtherVisible;
     @BindView(R.id.record_text_soft_keyboard)
-    View recordTextSoftKeyboard;
+    LinearLayout recordTextSoftKeyboard;
 
     int screenHeight = 0;
 
@@ -59,18 +59,14 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
 
     //注册软键盘状态变化监听
     public void addSoftKeyboardChangedListener(OnSoftKeyboardStateChangedListener listener) {
-        if (listener != null) {
-            mKeyboardStateListeners.add(listener);
-        }
+        mKeyboardStateListener = listener;
     }
     //取消软键盘状态变化监听
-    public void removeSoftKeyboardChangedListener(OnSoftKeyboardStateChangedListener listener) {
-        if (listener != null) {
-            mKeyboardStateListeners.remove(listener);
-        }
+    public void removeSoftKeyboardChangedListener() {
+        mKeyboardStateListener = null;
     }
 
-    private ArrayList<OnSoftKeyboardStateChangedListener> mKeyboardStateListeners;      //软键盘状态监听列表
+    private OnSoftKeyboardStateChangedListener mKeyboardStateListener;      //软键盘状态监听列表
     private ViewTreeObserver.OnGlobalLayoutListener mLayoutChangeListener;
     private boolean mIsSoftKeyboardShowing;
 
@@ -83,7 +79,6 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
         screenHeight = ScreenUtils.getScreenHeight(this);
 
         mIsSoftKeyboardShowing = false;
-        mKeyboardStateListeners = new ArrayList<>();
 
 
         mLayoutChangeListener = new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -101,32 +96,46 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
                 ALog.e("TextRecordActivity","screenHeight:"+screenHeight);
                 ALog.e("TextRecordActivity","rheight:"+r.height());
                 ALog.e("TextRecordActivity","px2dp:"+(int)DensityUtils.px2dp(getBaseContext(),heightDifference));
-                if((mIsSoftKeyboardShowing && !isKeyboardShowing) || (!mIsSoftKeyboardShowing && isKeyboardShowing)){
-                    ALog.e("TextRecordActivity","aaaaaaaa");
-                    recordTextSoftKeyboard.getLayoutParams().height = heightDifference;
-                }else{
-                    recordTextSoftKeyboard.getLayoutParams().height = 0;
-                    ALog.e("TextRecordActivity","bbbbbbbb");
-                }
 
                 //如果之前软键盘状态为显示，现在为关闭，或者之前为关闭，现在为显示，则表示软键盘的状态发生了改变
-//                if ((mIsSoftKeyboardShowing && !isKeyboardShowing) || (!mIsSoftKeyboardShowing && isKeyboardShowing)) {
-//                    mIsSoftKeyboardShowing = isKeyboardShowing;
-//                    for (int i = 0; i < mKeyboardStateListeners.size(); i++) {
-//                        OnSoftKeyboardStateChangedListener listener = mKeyboardStateListeners.get(i);
-//                        listener.OnSoftKeyboardStateChanged(mIsSoftKeyboardShowing, heightDifference);
-//                    }
-//                }
+                if ((mIsSoftKeyboardShowing && !isKeyboardShowing) || (!mIsSoftKeyboardShowing && isKeyboardShowing)) {
+                    mIsSoftKeyboardShowing = isKeyboardShowing;
+                    mKeyboardStateListener.OnSoftKeyboardStateChanged(mIsSoftKeyboardShowing, heightDifference);
+                }
             }
         };
         //注册布局变化监听
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mLayoutChangeListener);
+
+        addSoftKeyboardChangedListener(new OnSoftKeyboardStateChangedListener() {
+            @Override
+            public void OnSoftKeyboardStateChanged(boolean isKeyBoardShow, int keyboardHeight) {
+                if(isKeyBoardShow){
+                    ALog.e("TextRecordActivity","aaaaaaaa:"+keyboardHeight);
+//                    recordTextSoftKeyboard.getLayoutParams().height = keyboardHeight;
+                    recordTextSoftKeyboard.setLayoutParams(new LinearLayout.LayoutParams(0,keyboardHeight-60));
+                }else{
+                    ALog.e("TextRecordActivity","bbbbbbbb:"+keyboardHeight);
+//                    recordTextSoftKeyboard.getLayoutParams().height = 0;
+                    recordTextSoftKeyboard.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @SuppressWarnings("deprecation")
@@ -139,6 +148,7 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
         } else {
             getWindow().getDecorView().getViewTreeObserver().removeGlobalOnLayoutListener(mLayoutChangeListener);
         }
+        removeSoftKeyboardChangedListener();
         super.onDestroy();
     };
 
