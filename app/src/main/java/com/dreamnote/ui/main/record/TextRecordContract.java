@@ -18,7 +18,9 @@ public interface TextRecordContract extends BaseContract {
     }
 
     interface Presenter extends BaseContract.Presenter {
-        void upload(NewRecordBean nb);
+        void release(NewRecordBean nb);
+
+        void saveLocal(NewRecordBean nb);
     }
 
 }

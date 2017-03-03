@@ -16,10 +16,6 @@ public class TextRecordPresenter extends BasePresenter<TextRecordContract.View> 
         super(view);
     }
 
-    @Override
-    public void upload(NewRecordBean nb) {
-
-    }
 
     @Override
     public void detachView() {
@@ -31,4 +27,13 @@ public class TextRecordPresenter extends BasePresenter<TextRecordContract.View> 
 
     }
 
+    @Override
+    public void release(NewRecordBean nb) {
+
+    }
+
+    @Override
+    public void saveLocal(NewRecordBean nb) {
+
+    }
 }
