@@ -111,39 +111,6 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
         });
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        ToastUtils.showToast(this, "aaaaaa");
-//        switch(v.getId()){
-//            case R.id.record_text_other_visible:
-//                TextView tv = (TextView)v;
-//                if(isPublic){
-//                    Drawable nav_up = getResources().getDrawable(R.drawable.ic_lock_outline_black_18dp);
-//                    nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
-//                    recordTextOtherVisible.setCompoundDrawables(nav_up, null, null, null);
-//                    tv.setText("私有");
-//                    isPublic = false;
-//                }else{
-//                    Drawable nav_up = getResources().getDrawable(R.drawable.ic_public_black_18dp);
-//                    nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
-//                    recordTextOtherVisible.setCompoundDrawables(nav_up, null, null, null);
-//                    tv.setText("公开");
-//                    isPublic = true;
-//                }
-//                break;
-//            case R.id.toolbar_personal_img:
-//                ToastUtils.showToast(this, "取消发布");
-//                finish();
-//                break;
-//            case R.id.toolbar_setting_img:
-//                ToastUtils.showToast(this, "发布");
-//                finish();
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-
     private void initSoftKeyboardListener() {
         //获取屏幕高度
         screenHeight = ScreenUtils.getScreenHeight(this);
