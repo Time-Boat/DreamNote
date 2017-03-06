@@ -70,7 +70,6 @@ public class TextRecordActivity extends BaseActivity<TextRecordContract.Presente
 
         initSoftKeyboardListener();
         initListener();
-
     }
 
     private void initListener() {

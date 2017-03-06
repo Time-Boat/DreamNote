@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/holo_green_light"
-    android:orientation="vertical"
     >
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/recycler_view" ></include>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/other_share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/other_share_name_img"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.2"
+            android:gravity="right"
+            android:src="@drawable/personal"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
+
+        <TextView
+            android:id="@+id/other_share_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:gravity="center"
+            android:text="我的动态"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/other_share_setting_img"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:src="@drawable/ic_settings_white_24dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/other_share_widget_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/other_share_layout"
+        android:background="@color/transparent" />
+
+</RelativeLayout>

@@ -12,7 +12,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.dreamnote.R;
 import com.dreamnote.ui.main.add.AddChooseActivity;
-import com.dreamnote.ui.main.other.OtherFramgent;
+import com.dreamnote.ui.main.other.OtherShareFramgent;
 import com.dreamnote.ui.main.personal.PersonalInfoFragment;
 
 import java.util.ArrayList;
@@ -64,11 +64,11 @@ public class MainFragment extends BaseFragment {
 
         if (savedInstanceState == null) {
             mFragments[0] = PersonalInfoFragment.newInstance();
-            mFragments[2] = OtherFramgent.newInstance();
+            mFragments[2] = OtherShareFramgent.newInstance();
             loadMultipleRootFragment(R.id.fl_container_main_fragment, 0, mFragments[0], mFragments[2]);
         } else {
             mFragments[0] = findFragment(PersonalInfoFragment.class);
-            mFragments[2] = findFragment(OtherFramgent.class);
+            mFragments[2] = findFragment(OtherShareFramgent.class);
         }
 
         return view;

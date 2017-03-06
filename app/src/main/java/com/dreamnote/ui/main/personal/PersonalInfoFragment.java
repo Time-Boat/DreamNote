@@ -41,7 +41,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Presenter> implements PersonalInfoContract.View{
 
     private static final String TAG = PersonalInfoFragment.class.getSimpleName();
-    @BindView(R.id.recycler_personal)
+    @BindView(R.id.recycler_dream_Content)
     RecyclerView mRecyclerView;
     @BindView(R.id.ptrframelayout)
     PtrFrameLayout mPtrframelayout;
@@ -61,7 +61,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     private int pagination = 0;
 
     //渐隐效果涉及到的控件
-    @BindView(R.id.personal_llout)
+    @BindView(R.id.personal_layout)
     LinearLayout mLinearLayout;
     @BindView(R.id.personal_name_img)
     CircleImageView mCircleImageView;

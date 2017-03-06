@@ -15,7 +15,7 @@ public class DreamInfoBean {
      * isLike : 1
      * userId : 111
      * releaseTime : 2017-1-1
-     * picture : null
+     * picture : null        //图片的地址
      * commentNum : 2
      */
 
