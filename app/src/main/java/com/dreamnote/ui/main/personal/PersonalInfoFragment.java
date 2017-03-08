@@ -65,7 +65,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     LinearLayout mLinearLayout;
     @BindView(R.id.personal_name_img)
     CircleImageView mCircleImageView;
-    @BindView(R.id.textview)
+    @BindView(R.id.personal_title)
     TextView title;
     @BindView(R.id.personal_setting_img)
     ImageView settingImg;
@@ -262,7 +262,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
     }
 
     private void setAdapter() {
-        mPersonalInfoAdapter = new PersonalInfoAdapter(_mActivity);
+        mPersonalInfoAdapter = new PersonalInfoAdapter();
         //添加头部
         addHeader();
         mPersonalInfoAdapter.removeAllFooterView();
@@ -302,10 +302,10 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                 // TODO Auto-generated method stub
                 if (dy <= 0) {
                     //设置标题的背景颜色
-                    mLinearLayout.setBackgroundColor(Color.argb((int) 0, 255,255,255));
-                    title.setTextColor(Color.rgb(255,255,255));
-                    changeImg(255,255,255);
-                    widgetView.setBackgroundColor(Color.argb((int) 0, 255,255,255));
+                    mLinearLayout.setBackgroundColor(Color.argb(0, 255, 255, 255));
+                    title.setTextColor(Color.rgb(255, 255, 255));
+                    changeImg(255, 255, 255);
+                    widgetView.setBackgroundColor(Color.argb(0, 255, 255, 255));
                 } else if (dy > 0 && dy <= height) {      //滑 动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
                     float scale = (float) dy / height;
                     float alpha = (242 * scale);
@@ -318,7 +318,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.Pres
                     mLinearLayout.setBackgroundColor(Color.argb( 242, 255,255,255));
                     title.setTextColor(Color.rgb(0,0,0));
                     changeImg(0,0,0);
-                    widgetView.setBackgroundColor(Color.argb((int) 242, 0xdf,0xdf,0xdf));
+                    widgetView.setBackgroundColor(Color.argb(242, 0xdf, 0xdf, 0xdf));
                 }
 
                 super.onScrolled(recyclerView, x, y);

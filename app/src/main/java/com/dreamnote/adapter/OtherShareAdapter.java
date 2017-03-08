@@ -9,14 +9,14 @@ import cn.itsite.abase.log.ALog;
 
 /**
  * @author: Administrator
- * @time 2017-02-15 10:23
+ * @time 2017-03-07 18:45
  * @email 770164810@qq.com
  */
 
-public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfoBean, BaseViewHolder> {
+public class OtherShareAdapter  extends BaseQuickAdapter<DreamInfoBean, BaseViewHolder> {
 
 
-    public PersonalInfoAdapter() {
+    public OtherShareAdapter() {
         super(R.layout.item_personal_fragment, null);
     }
 
@@ -38,5 +38,4 @@ public class PersonalInfoAdapter extends BaseQuickAdapter<DreamInfoBean, BaseVie
         holder.addOnClickListener(R.id.item_personal_content_img);
 
     }
-
 }

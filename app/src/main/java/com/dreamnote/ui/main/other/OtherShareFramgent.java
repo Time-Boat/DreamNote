@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamnote.R;
+import com.dreamnote.adapter.OtherShareAdapter;
 import com.dreamnote.adapter.PersonalInfoAdapter;
 import com.dreamnote.bean.DreamInfoBean;
 import com.dreamnote.common.Constants;
@@ -61,7 +62,7 @@ public class OtherShareFramgent extends BaseFragment<OtherShareContract.Presente
 
     LinearLayoutManager mLinearLayoutManager;
 
-    PersonalInfoAdapter mPersonalInfoAdapter;
+    OtherShareAdapter otherShareAdapter;
 
     private int pagination = 0;
 
@@ -106,17 +107,17 @@ public class OtherShareFramgent extends BaseFragment<OtherShareContract.Presente
         if (mDreamInfo.size() > 0) {
             if (pagination == 0) {
                 //说明是第一页，或者是刷新,把页码重置为0，代表第一页。
-                mPersonalInfoAdapter.removeAllFooterView();
+                otherShareAdapter.removeAllFooterView();
                 if (mDreamInfo.size() >= Constants.PAGE_SIZE) {
-                    mPersonalInfoAdapter.addFooterView(mFooterLoading);
+                    otherShareAdapter.addFooterView(mFooterLoading);
                 }
                 this.pagination = 0;
-                mPersonalInfoAdapter.setNewData(mDreamInfo);
-                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+                otherShareAdapter.setNewData(mDreamInfo);
+                otherShareAdapter.addFooterView(mFooterNotLoading);
                 //设置一下会重新刷新整个item的位置，即使不是第一个item位置刷新，也会重新刷新定位到第一个。
-                recyclerDreamContent.setAdapter(mPersonalInfoAdapter);
+                recyclerDreamContent.setAdapter(otherShareAdapter);
             } else {
-                mPersonalInfoAdapter.addData(mDreamInfo);
+                otherShareAdapter.addData(mDreamInfo);
             }
             //靠这个参数控制最后不需要请求数据
             isLoading = false;
@@ -127,10 +128,10 @@ public class OtherShareFramgent extends BaseFragment<OtherShareContract.Presente
                 Toast.makeText(_mActivity,"当前页无数据",Toast.LENGTH_SHORT).show();
             } else {
                 //此处一定要先清除之前加载的FooterView，否则会报错。
-                mPersonalInfoAdapter.removeAllFooterView();
-                mPersonalInfoAdapter.addFooterView(mFooterNotLoading);
+                otherShareAdapter.removeAllFooterView();
+                otherShareAdapter.addFooterView(mFooterNotLoading);
                 //因为修改了RecyclerView的内容，所以要通知adapter更新一下
-                mPersonalInfoAdapter.notifyDataSetChanged();
+                otherShareAdapter.notifyDataSetChanged();
             }
         }
     }
